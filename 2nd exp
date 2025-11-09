@@ -1,0 +1,54 @@
+EXP=2
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = sns.load_dataset('titanic')
+
+print("===== BASIC INFO =====")
+print(df.info())
+print("\n===== FIRST 5 ROWS =====")
+print(df.head())
+
+print("\n===== SUMMARY STATISTICS =====")
+print(df.describe(include='all'))
+
+print("\n===== MISSING VALUES =====")
+print(df.isnull().sum())
+
+print("\n===== DATA TYPES =====")
+print(df.dtypes)
+
+print("\n===== CORRELATION MATRIX =====")
+print(df.corr(numeric_only=True))
+
+plt.figure(figsize=(6,4))
+sns.countplot(data=df, x='survived')
+plt.title("Survival Count")
+plt.show()
+
+plt.figure(figsize=(6,4))
+sns.countplot(data=df, x='sex', hue='survived')
+plt.title("Survival by Gender")
+plt.show()
+
+plt.figure(figsize=(6,4))
+sns.countplot(data=df, x='class', hue='survived')
+plt.title("Survival by Passenger Class")
+plt.show()
+
+plt.figure(figsize=(6,4))
+sns.histplot(data=df, x='age', bins=30, kde=True)
+plt.title("Age Distribution of Passengers")
+plt.show()
+
+plt.figure(figsize=(8,6))
+sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm')
+plt.title("Correlation Heatmap")
+plt.show()
+
+sns.pairplot(df[["survived", "age", "fare", "pclass"]], hue="survived")
+plt.show()
+
+print("\n===== EDA COMPLETED =====")
