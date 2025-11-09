@@ -1,0 +1,22 @@
+PImage mapImage; 
+Table locationTable; 
+int rowCount; 
+void setup() { 
+size(640, 700); 
+// Correct way to load image and table in Processing 
+mapImage = loadImage("map.png"); 
+locationTable = loadTable("locationTable.tsv", "header"); 
+rowCount = locationTable.getRowCount(); 
+} 
+void draw() { 
+background(255); 
+image(mapImage, 120, -95,550,600); 
+fill(192, 0, 0); 
+noStroke(); 
+smooth(); 
+for (int row = 0; row < rowCount; row++) { 
+float x = locationTable.getFloat(row, "x"); 
+float y = locationTable.getFloat(row, "y"); 
+ellipse(x, y, 9, 9); 
+} 
+} 
