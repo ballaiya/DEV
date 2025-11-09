@@ -1,0 +1,55 @@
+REQUIRED: DailyDelhiClimateTest.csv
+
+
+Table table; 
+float[] temps; 
+String[] dates; 
+
+void setup() { 
+  size(1000, 600); 
+  table = loadTable("DailyDelhiClimateTest.csv", "header"); 
+  int rowCount = table.getRowCount(); 
+  temps = new float[rowCount]; 
+  dates = new String[rowCount]; 
+
+  for (int i = 0; i < rowCount; i++) { 
+    temps[i] = table.getFloat(i, "meantemp"); 
+    dates[i] = table.getString(i, "date"); 
+  } 
+
+  background(255); 
+  stroke(50, 100, 200); 
+  strokeWeight(2); 
+  noFill(); 
+  float minTemp = min(temps); 
+  float maxTemp = max(temps); 
+
+  beginShape(); 
+  for (int i = 0; i < temps.length; i++) { 
+    float x = map(i, 0, temps.length - 1, 60, width - 60); 
+    float y = map(temps[i], minTemp, maxTemp, height - 60, 60); 
+    vertex(x, y); 
+  } 
+  endShape(); 
+
+  fill(0); 
+  textSize(16); 
+  textAlign(CENTER); 
+  text("Delhi Climate - Mean Temperature", width / 2, 30); 
+
+  textSize(12); 
+  textAlign(RIGHT); 
+  for (int i = 0; i <= 5; i++) { 
+    float t = lerp(minTemp, maxTemp, i / 5.0); 
+    float y = map(t, minTemp, maxTemp, height - 60, 60); 
+    text(nf(t, 1, 1), 50, y); 
+    stroke(200); 
+    line(60, y, width - 60, y); 
+  } 
+
+  textAlign(CENTER); 
+  for (int i = 0; i < dates.length; i += dates.length / 6) { 
+    float x = map(i, 0, temps.length - 1, 60, width - 60); 
+    text(dates[i], x, height - 30); 
+  } 
+}
