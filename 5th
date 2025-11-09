@@ -1,0 +1,40 @@
+Exp=5 
+required=deeplearning.txt 
+
+!pip install nltk wordcloud matplotlib
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+from collections import Counter
+import re
+
+# Download required NLTK resources
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+
+def preprocess_text(text):
+    text = re.sub(r'\W+', ' ', text)
+    text = re.sub(r'\d+', '', text)
+    text = text.lower()
+    words = word_tokenize(text)
+    stop_words = set(stopwords.words('english'))
+    filtered_words = [word for word in words if word not in stop_words and len(word) > 2]
+    return filtered_words
+
+def generate_wordcloud(text):
+    processed_words = preprocess_text(text)
+    word_counts = Counter(processed_words)
+    wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(word_counts)
+    plt.figure(figsize=(10, 5))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
+    plt.show()
+
+with open('deeplearning.txt', 'r', encoding='utf-8') as file:
+    text_data = file.read()
+
+generate_wordcloud(text_data)
