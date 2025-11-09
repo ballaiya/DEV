@@ -1,3 +1,5 @@
+Required : Map, Location.tsv
+
 PImage mapImage; 
 Table locationTable; 
 int rowCount; 
