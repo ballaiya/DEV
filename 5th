@@ -1,4 +1,4 @@
-Exp=5 
+Exp=5 == "Implementation of text mining on a set of documents."
 required=deeplearning.txt 
 
 !pip install nltk wordcloud matplotlib
