@@ -1,4 +1,4 @@
-Exp=3 
+Exp=3 == "Implementation of document embeddings for fake news identification."
 required= fake_or_real_news.csv 
 
 
